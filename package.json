@@ -1,0 +1,43 @@
+{
+  "name": "mcap-deploy",
+  "description": "node.js implementation to deploy an app against the studio API.",
+  "version": "0.0.0",
+  "homepage": "https://github.com/mwaylabs/mcap-deploy",
+  "bugs": "https://github.com/mwaylabs/mcap-deploy/issues",
+  "license": "MIT",
+  "main": "lib/mcap-deploy.js",
+  "author": {
+    "name": "mwaylabs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mwaylabs/mcap-deploy"
+  },
+  "keywords": [],
+  "dependencies": {
+    "lodash": "2.4.1",
+    "q": "2.0.2",
+    "debug": "1.0.4",
+    "node-formdata": "^0.1.5",
+    "request": "^2.40.0",
+    "mcap-easy-zip": "^0.1.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.6.2",
+    "gulp-util": "2.2.16",
+    "gulp-bump": "^0.1.8",
+    "gulp-jscs": "^0.4.2",
+    "gulp-jshint": "^1.5.5",
+    "gulp-mocha": "^0.4.1",
+    "gulp-istanbul": "^0.2.0",
+    "coveralls": "^2.10.0",
+    "should": "^3.3.1",
+    "jshint-stylish": "^0.2.0",
+    "gulp-load-plugins": "^0.5.1",
+    "gulp-plumber": "^0.6.2"
+  },
+  "scripts": {
+    "coveralls": "gulp test && cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "test": "gulp test"
+  }
+}
