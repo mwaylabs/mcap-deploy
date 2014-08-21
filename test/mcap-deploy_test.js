@@ -38,7 +38,7 @@ describe('getEndpoint', function () {
         sinon.stub(request, 'post', function (options, callback) {
             callback(null, {
                 statusCode: 200
-            });
+            }, null, null);
         });
 
         sinon.stub(request, 'get', function (url, options, callback) {
@@ -70,6 +70,7 @@ describe('getEndpoint', function () {
 
         mcapDeploy.deploy(options, request).then(function (data) {
             assert.equal(fs.existsSync(data.zipPath), false, 'zip not deleted');
+            assert.equal(data.endpoint, 'http://localhost:3030/mway', 'wrong response');
             cb();
         });
 
