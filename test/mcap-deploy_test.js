@@ -9,6 +9,46 @@ var fs = require('fs');
 
 var rootPath = path.resolve(__dirname, '../example/');
 
+var getCurrentAuthentication = function (callback) {
+    var body = JSON.stringify({
+        "user": {},
+        "organization": {
+            "name": "mway",
+            "uuid": "df211e58-17ea-4223-8d34-dbbc4b5b76c0",
+            "uniqueName": "mway"
+        },
+        "roles": []
+    });
+    callback(null, {
+        statusCode: 200,
+        body: body
+    }, body);
+};
+
+var getOrganization = function (callback, roles) {
+    var body = JSON.stringify({
+        "uuid": "26450af7-4e14-4c23-8f3f-07084efc5740",
+        "aclEntries": [
+            "user.authenticated:r"
+        ],
+        "name": "system",
+        "uniqueName": "system",
+        "address": {},
+        "billingSettings": {
+            "billingAddress": {},
+            "billingPerson": {},
+            "currency": "EUR"
+        },
+        "technicalPerson": {},
+        "defaultRoles": roles || [],
+        "version": 1,
+        "effectivePermissions": "*"
+    });
+    callback(null, {
+        statusCode: 200,
+        body: body
+    }, body);
+};
 
 describe('getEndpoint', function () {
 
@@ -32,6 +72,37 @@ describe('getEndpoint', function () {
 
     });
 
+    it('not permitted', function (cb) {
+        var request = Request.defaults({jar: true});
+
+        sinon.stub(request, 'get', function (url, options, callback) {
+            if (url.match(/currentAuthorization/)) {
+                return getCurrentAuthentication(callback);
+            } else if (url.match(/security\/rest\/organizations/)) {
+                return getOrganization(callback, []);
+            }
+        });
+
+        var options = {
+            baseurl: 'http://localhost:3030/',
+            password: 'pass',
+            username: 'user',
+            fields: {
+                name: 'TestApp1',
+                uuid: '5fc00ddc-292a-4084-8679-fa8a7fadf1db'
+            },
+            rootPath: path.resolve(__dirname, '../example/')
+        };
+
+        mcapDeploy.deploy(options, request).then(function (data) {
+        }, function(err){
+            assert.equal(err, 'Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.');
+            cb();
+        });
+
+    });
+
+
     it('should send a request', function (cb) {
 
         var request = Request.defaults({jar: true});
@@ -42,20 +113,13 @@ describe('getEndpoint', function () {
         });
 
         sinon.stub(request, 'get', function (url, options, callback) {
-            var body = JSON.stringify({
-                "user": {},
-                "organization": {
-                    "name": "mway",
-                    "uuid": "df211e58-17ea-4223-8d34-dbbc4b5b76c0",
-                    "uniqueName": "mway"
-                },
-                "roles": []
-            });
-            callback(null, {
-                statusCode: 200,
-                body: body
-            }, body);
+            if (url.match(/currentAuthorization/)) {
+                return getCurrentAuthentication(callback);
+            } else if (url.match(/security\/rest\/organizations/)) {
+                return getOrganization(callback, ['5e88474e-5d14-447c-8834-f09c336b2cbd']);
+            }
         });
+
 
         var options = {
             baseurl: 'http://localhost:3030/',
