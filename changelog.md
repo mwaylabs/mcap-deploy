@@ -1,3 +1,6 @@
+## 0.0.4 - 2014-08-29
+- Set upload endpoint to /studio/upload
+
 ## 0.0.3 - 2014-08-21
 - test the organisation default roles before upoad. A deploy should only be permitted if the orga has default roles.
 
