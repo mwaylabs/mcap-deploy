@@ -50,7 +50,7 @@ var getOrganization = function (callback, roles) {
     }, body);
 };
 
-describe('getEndpoint', function () {
+describe('Deploy', function () {
 
     it('should be valid url', function () {
         mcapDeploy.getEndpoint('http://server.com/', mcapDeploy.ENDPPOINT).should.equal('http://server.com/' + mcapDeploy.ENDPPOINT);
@@ -95,7 +95,7 @@ describe('getEndpoint', function () {
         };
 
         mcapDeploy.deploy(options, request).then(function (data) {
-        }, function(err){
+        }, function (err) {
             assert.equal(err, 'Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.');
             cb();
         });
@@ -139,6 +139,65 @@ describe('getEndpoint', function () {
         });
 
     });
+
+
+    it('should send a request to the given endpoint', function (cb) {
+
+        var request = Request.defaults({jar: true});
+        var endpoint = '/my/awesome/endpoint';
+        var baseurl = 'http://localhost:3030/';
+        sinon.stub(request, 'post', function (options, callback) {
+            var expect = baseurl + 'mway' + endpoint;
+            console.error(options.url);
+            console.error(expect);
+            assert.equal(options.url, expect, 'zip not deleted');
+            cb();
+        });
+
+        var options = {
+            baseurl: baseurl,
+            password: 'pass',
+            username: 'user',
+            endpoint: endpoint,
+            fields: {
+                name: 'TestApp1',
+                uuid: '5fc00ddc-292a-4084-8679-fa8a7fadf1db'
+            },
+            rootPath: path.resolve(__dirname, '../example/')
+        };
+
+        mcapDeploy.upload(options, request);
+
+    });
+
+    it('should send a request to the given endpoint and add a /', function (cb) {
+
+        var request = Request.defaults({jar: true});
+        var endpoint = 'my/awesome/endpoint';
+        var baseurl = 'http://localhost:3030/';
+        sinon.stub(request, 'post', function (options, callback) {
+            var expect = baseurl + 'mway' + endpoint;
+            assert.equal(options.url, baseurl + 'mway/' + endpoint, 'zip not deleted');
+            cb();
+        });
+
+        var options = {
+            baseurl: baseurl,
+            password: 'pass',
+            username: 'user',
+            endpoint: endpoint,
+            fields: {
+                name: 'TestApp1',
+                uuid: '5fc00ddc-292a-4084-8679-fa8a7fadf1db'
+            },
+            rootPath: path.resolve(__dirname, '../example/')
+        };
+
+        mcapDeploy.upload(options, request);
+
+    });
+
+
 });
 
 

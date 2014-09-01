@@ -1,3 +1,6 @@
+## 0.0.5 - 2014-09-01
+- add an endpoint as option to the upload/deploy call
+
 ## 0.0.4 - 2014-08-29
 - Set upload endpoint to /studio/upload
 
