@@ -1,3 +1,8 @@
+## 0.0.6 - 2014-09-04
+- show error if login failed
+- delete zip if the upload was unsuccessfull
+- first check if current authentication and organization is working then create zip file
+
 ## 0.0.5 - 2014-09-01
 - add an endpoint as option to the upload/deploy call
 
