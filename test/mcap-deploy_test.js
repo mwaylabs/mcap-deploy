@@ -25,6 +25,18 @@ var getCurrentAuthentication = function (callback) {
     }, body);
 };
 
+var getCurrentAuthenticationFail = function (callback) {
+    var body = JSON.stringify({
+        "user": null,
+        "organization": null,
+        "roles": null
+    });
+    callback(null, {
+        statusCode: 200,
+        body: body
+    }, body);
+};
+
 var getOrganization = function (callback, roles) {
     var body = JSON.stringify({
         "uuid": "26450af7-4e14-4c23-8f3f-07084efc5740",
@@ -197,6 +209,35 @@ describe('Deploy', function () {
 
     });
 
+    it('authentication failed', function (cb) {
+        var request = Request.defaults({jar: true});
+
+        sinon.stub(request, 'get', function (url, options, callback) {
+            if (url.match(/currentAuthorization/)) {
+                return getCurrentAuthenticationFail(callback);
+            } else if (url.match(/security\/rest\/organizations/)) {
+                return getOrganization(callback, []);
+            }
+        });
+
+        var options = {
+            baseurl: 'http://localhost:3030/',
+            password: 'pass',
+            username: 'user',
+            fields: {
+                name: 'TestApp1',
+                uuid: '5fc00ddc-292a-4084-8679-fa8a7fadf1db'
+            },
+            rootPath: path.resolve(__dirname, '../example/')
+        };
+
+        mcapDeploy.deploy(options, request).then(function (data) {
+        }, function (err) {
+            assert.equal(err.message, 'Authentication failed');
+            cb();
+        });
+
+    });
 
 });
 
