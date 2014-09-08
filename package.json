@@ -35,7 +35,8 @@
     "jshint-stylish": "^0.2.0",
     "gulp-load-plugins": "^0.5.1",
     "gulp-plumber": "^0.6.2",
-    "sinon": "^1.10.3"
+    "sinon": "^1.10.3",
+    "globule": "^0.2.0"
   },
   "scripts": {
     "coveralls": "gulp test && cat coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",

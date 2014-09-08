@@ -236,7 +236,16 @@ describe('Deploy', function () {
             assert.equal(err.message, 'Authentication failed');
             cb();
         });
+    });
 
+    it.only('getGlobPattern', function () {
+        assert.deepEqual(mcapDeploy.getGlobPattern(), ['**/*']);
+        var globule = require('globule');
+        var rootPath =  path.resolve(__dirname, 'apps/MyTestApp');
+        var pattern = mcapDeploy.getGlobPattern(rootPath);
+        assert.deepEqual(pattern, [ '**/*', '!ignore.txt', '!**/**/ignore.txt', '!**/**/ignore' ]);
+        var files = globule.find(pattern, {cwd: rootPath});
+        assert.deepEqual(files, [ 'mcap.json', 'server' ]);
     });
 
 });
