@@ -33,3 +33,14 @@ mcapDeploy.deploy(options/*, request*/).then(function(){
     console.log(arguments);
 });
 ```
+
+## Ignore files
+To ignore files just create a `.mcapignore` file inside the root of the deploy folder. All files (as glob) will be ignored
+**Example:**
+
+```
+ignore.txt
+**/**/ignore.txt
+**/**/ignore
+```
+

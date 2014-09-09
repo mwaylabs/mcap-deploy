@@ -6,6 +6,8 @@ var Request = require('request');
 var path = require('path');
 var sinon = require('sinon');
 var fs = require('fs');
+var os = require('os');
+var unzip = require('unzip');
 
 var rootPath = path.resolve(__dirname, '../example/');
 
@@ -160,8 +162,8 @@ describe('Deploy', function () {
         var baseurl = 'http://localhost:3030/';
         sinon.stub(request, 'post', function (options, callback) {
             var expect = baseurl + 'mway' + endpoint;
-            console.error(options.url);
-            console.error(expect);
+            //console.error(options.url);
+            //console.error(expect);
             assert.equal(options.url, expect, 'zip not deleted');
             cb();
         });
@@ -241,11 +243,41 @@ describe('Deploy', function () {
     it('getGlobPattern', function () {
         assert.deepEqual(mcapDeploy.getGlobPattern(), ['**/*']);
         var globule = require('globule');
-        var rootPath =  path.resolve(__dirname, 'apps/MyTestApp');
+        var rootPath = path.resolve(__dirname, 'apps/MyTestApp');
         var pattern = mcapDeploy.getGlobPattern(rootPath);
         assert.deepEqual(pattern, [ '**/*', '!ignore.txt', '!**/**/ignore.txt', '!**/**/ignore' ]);
         var files = globule.find(pattern, {cwd: rootPath});
         assert.deepEqual(files, [ 'mcap.json', 'server' ]);
+    });
+
+    it('should create a zip without ignored files and delete it afterwards', function (cb) {
+        var counter = 2;
+        var rootPath = path.resolve(__dirname, 'apps/MyTestApp');
+        var dest = path.resolve(__dirname, 'apps/test.zip');
+        mcapDeploy.createZip(rootPath, dest).then(function () {
+            // if zip was succesfull created read it
+            fs.createReadStream(dest)
+                // unzip all files
+                .pipe(unzip.Parse())
+                // and send it to this pipe
+                .on('entry', function (entry) {
+                    var fileName = entry.path;
+                    if(fileName === 'server/' || fileName === 'mcap.json'){
+                        // expect exactly 2 files
+                        counter = counter - 1;
+                        // next file
+                        entry.autodrain();
+                        if(!counter){
+                            // delete the app
+                            mcapDeploy.deleteZip(dest);
+                            // test also the deletion
+                            assert.equal(fs.existsSync(dest), false, 'zip not deleted');
+                            cb();
+                        }
+                    }
+                })
+        });
+
     });
 
 });

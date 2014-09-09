@@ -1,3 +1,6 @@
+## 0.0.7 - 2014-09-09
+- '.mcapignore' will be evaluated
+
 ## 0.0.6 - 2014-09-04
 - show error if login failed
 - delete zip if the upload was unsuccessfull
