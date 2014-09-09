@@ -238,7 +238,7 @@ describe('Deploy', function () {
         });
     });
 
-    it.only('getGlobPattern', function () {
+    it('getGlobPattern', function () {
         assert.deepEqual(mcapDeploy.getGlobPattern(), ['**/*']);
         var globule = require('globule');
         var rootPath =  path.resolve(__dirname, 'apps/MyTestApp');
