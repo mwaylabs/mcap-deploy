@@ -15,12 +15,13 @@
   },
   "keywords": [],
   "dependencies": {
-    "lodash": "2.4.1",
-    "q": "2.0.2",
     "debug": "1.0.4",
+    "lodash": "2.4.1",
+    "mcap-easy-zip": "^0.1.0",
     "node-formdata": "^0.1.5",
+    "q": "2.0.2",
     "request": "^2.40.0",
-    "mcap-easy-zip": "^0.1.0"
+    "verror": "^1.4.0"
   },
   "devDependencies": {
     "gulp": "^3.6.2",
