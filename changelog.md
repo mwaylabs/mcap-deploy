@@ -1,5 +1,6 @@
-## 0.0.7 - 2014-09-09
+## 0.1.0 - 2014-09-24
 - '.mcapignore' will be evaluated
+- Improve error reporting
 
 ## 0.0.6 - 2014-09-04
 - show error if login failed
