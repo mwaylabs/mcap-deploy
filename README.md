@@ -35,12 +35,13 @@ mcapDeploy.deploy(options/*, request*/).then(function(){
 ```
 
 ## Ignore files
-To ignore files just create a `.mcapignore` file inside the root of the deploy folder. All files (as glob) will be ignored
+
+To ignore files just create a `.mcapignore` file inside the root of the deploy folder, like how git ignores files based on a .gitignore file.
+
 **Example:**
 
 ```
-ignore.txt
-**/**/ignore.txt
-**/**/ignore
+log.txt
+server/node_modules
 ```
 
