@@ -1,4 +1,5 @@
 # mcap-deploy 
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-url]][daviddm-image] [![Coverage Status][coveralls-image]][coveralls-url]
 
 node.js implementation to deploy an app against the studio API.
 
@@ -45,3 +46,11 @@ log.txt
 server/node_modules
 ```
 
+[npm-url]: https://npmjs.org/package/mcap-deploy
+[npm-image]: https://badge.fury.io/js/mcap-deploy.svg
+[travis-url]: https://travis-ci.org/mwaylabs/mcap-deploy
+[travis-image]: https://travis-ci.org/mwaylabs/mcap-deploy.svg?branch=master
+[daviddm-url]: https://david-dm.org/mwaylabs/mcap-deploy.svg?theme=shields.io
+[daviddm-image]: https://david-dm.org/mwaylabs/mcap-deploy
+[coveralls-url]: https://coveralls.io/r/mwaylabs/mcap-deploy
+[coveralls-image]: https://coveralls.io/repos/mwaylabs/mcap-deploy/badge.png
