@@ -6,10 +6,7 @@ var Request = require('request');
 var path = require('path');
 var sinon = require('sinon');
 var fs = require('fs');
-var os = require('os');
 var unzip = require('unzip');
-
-var rootPath = path.resolve(__dirname, '../example/');
 
 var getCurrentAuthentication = function (callback) {
     var body = JSON.stringify({
@@ -108,14 +105,13 @@ describe('Deploy', function () {
             rootPath: path.resolve(__dirname, '../example/')
         };
 
-        mcapDeploy.deploy(options, request).then(function (data) {
+        mcapDeploy.deploy(options, request).then(function () {
         }, function (err) {
             assert.equal(err, 'Organization has no defaultRoles. This will cause problems creating applications. Operation not permitted.');
             cb();
         });
 
     });
-
 
     it('should send a request', function (cb) {
 
@@ -133,7 +129,6 @@ describe('Deploy', function () {
                 return getOrganization(callback, ['5e88474e-5d14-447c-8834-f09c336b2cbd']);
             }
         });
-
 
         var options = {
             baseurl: 'http://localhost:3030/',
@@ -154,13 +149,12 @@ describe('Deploy', function () {
 
     });
 
-
     it('should send a request to the given endpoint', function (cb) {
 
         var request = Request.defaults({jar: true});
         var endpoint = '/my/awesome/endpoint';
         var baseurl = 'http://localhost:3030/';
-        sinon.stub(request, 'post', function (options, callback) {
+        sinon.stub(request, 'post', function (options) {
             var expect = baseurl + 'mway' + endpoint;
             //console.error(options.url);
             //console.error(expect);
@@ -189,8 +183,7 @@ describe('Deploy', function () {
         var request = Request.defaults({jar: true});
         var endpoint = 'my/awesome/endpoint';
         var baseurl = 'http://localhost:3030/';
-        sinon.stub(request, 'post', function (options, callback) {
-            var expect = baseurl + 'mway' + endpoint;
+        sinon.stub(request, 'post', function (options) {
             assert.equal(options.url, baseurl + 'mway/' + endpoint, 'zip not deleted');
             cb();
         });
