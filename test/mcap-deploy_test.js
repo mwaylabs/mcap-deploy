@@ -233,25 +233,15 @@ describe('Deploy', function () {
             rootPath: path.resolve(__dirname, '../example/')
         };
 
-        mcapDeploy.deploy(options, request).then(function (data) {
+        mcapDeploy.deploy(options, request).then(function () {
         }, function (err) {
             assert.equal(err.message, 'Authentication failed');
             cb();
         });
     });
 
-    it('getGlobPattern', function () {
-        assert.deepEqual(mcapDeploy.getGlobPattern(), ['**/*']);
-        var globule = require('globule');
-        var rootPath = path.resolve(__dirname, 'apps/MyTestApp');
-        var pattern = mcapDeploy.getGlobPattern(rootPath);
-        assert.deepEqual(pattern, [ '**/*', '!ignore.txt', '!**/**/ignore.txt', '!**/**/ignore' ]);
-        var files = globule.find(pattern, {cwd: rootPath});
-        assert.deepEqual(files, [ 'mcap.json', 'server' ]);
-    });
-
     it('should create a zip without ignored files and delete it afterwards', function (cb) {
-        var counter = 2;
+        var counter = 4;
         var rootPath = path.resolve(__dirname, 'apps/MyTestApp');
         var dest = path.resolve(__dirname, 'apps/test.zip');
         mcapDeploy.createZip(rootPath, dest).then(function () {
@@ -260,26 +250,15 @@ describe('Deploy', function () {
                 // unzip all files
                 .pipe(unzip.Parse())
                 // and send it to this pipe
-                .on('entry', function (entry) {
-                    var fileName = entry.path;
-                    if(fileName === 'server/' || fileName === 'mcap.json'){
-                        // expect exactly 2 files
-                        counter = counter - 1;
-                        // next file
-                        entry.autodrain();
-                        if(!counter){
-                            // delete the app
-                            mcapDeploy.deleteZip(dest);
-                            // test also the deletion
-                            assert.equal(fs.existsSync(dest), false, 'zip not deleted');
-                            cb();
-                        }
-                    }
+                .on('entry', function () {
+                  counter--;
                 })
+                .on('close', function () {
+                  assert.equal(counter, 0);
+                  mcapDeploy.deleteZip(dest);
+                  assert.equal(fs.existsSync(dest), false, 'zip not deleted');
+                  cb();
+                });
         });
-
     });
-
 });
-
-

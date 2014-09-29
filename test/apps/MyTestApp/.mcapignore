@@ -1,3 +1,5 @@
 ignore.txt
-**/**/ignore.txt
-**/**/ignore
+server/ignore.txt
+server/ignore
+ignore
+.DS_Store
