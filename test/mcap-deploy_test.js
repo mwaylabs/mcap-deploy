@@ -6,7 +6,11 @@ var Request = require('request');
 var path = require('path');
 var sinon = require('sinon');
 var fs = require('fs');
+var mkdirp = require('mkdirp');
+var rimraf = require('rimraf');
 var unzip = require('unzip');
+
+var rootPath = path.resolve(__dirname, 'fixtures/MyTestApp');
 
 var getCurrentAuthentication = function (callback) {
     var body = JSON.stringify({
@@ -63,6 +67,14 @@ var getOrganization = function (callback, roles) {
 
 describe('Deploy', function () {
 
+    beforeEach(function(cb) {
+      process.chdir(__dirname);
+      var tempDir = path.resolve(__dirname, 'temp');
+      rimraf.sync(tempDir);
+      mkdirp.sync(tempDir);
+      cb();
+    });
+
     it('should be valid url', function () {
         mcapDeploy.getEndpoint('http://server.com/', mcapDeploy.ENDPPOINT).should.equal('http://server.com/' + mcapDeploy.ENDPPOINT);
         mcapDeploy.getEndpoint('http://server.com', mcapDeploy.ENDPPOINT).should.equal('http://server.com/' + mcapDeploy.ENDPPOINT);
@@ -102,7 +114,7 @@ describe('Deploy', function () {
                 name: 'TestApp1',
                 uuid: '5fc00ddc-292a-4084-8679-fa8a7fadf1db'
             },
-            rootPath: path.resolve(__dirname, '../example/')
+            rootPath: rootPath
         };
 
         mcapDeploy.deploy(options, request).then(function () {
@@ -138,7 +150,7 @@ describe('Deploy', function () {
                 name: 'TestApp1',
                 uuid: '5fc00ddc-292a-4084-8679-fa8a7fadf1db'
             },
-            rootPath: path.resolve(__dirname, '../example/')
+            rootPath: rootPath
         };
 
         mcapDeploy.deploy(options, request).then(function (data) {
@@ -171,7 +183,7 @@ describe('Deploy', function () {
                 name: 'TestApp1',
                 uuid: '5fc00ddc-292a-4084-8679-fa8a7fadf1db'
             },
-            rootPath: path.resolve(__dirname, '../example/')
+            rootPath: rootPath
         };
 
         mcapDeploy.upload(options, request);
@@ -197,7 +209,7 @@ describe('Deploy', function () {
                 name: 'TestApp1',
                 uuid: '5fc00ddc-292a-4084-8679-fa8a7fadf1db'
             },
-            rootPath: path.resolve(__dirname, '../example/')
+            rootPath: rootPath
         };
 
         mcapDeploy.upload(options, request);
@@ -234,24 +246,23 @@ describe('Deploy', function () {
     });
 
     it('should create a zip without ignored files and delete it afterwards', function (cb) {
-        var counter = 4;
-        var rootPath = path.resolve(__dirname, 'apps/MyTestApp');
-        var dest = path.resolve(__dirname, 'apps/test.zip');
+        var counter = 7;
+        var dest = path.resolve(__dirname, 'temp/test.zip');
         mcapDeploy.createZip(rootPath, dest).then(function () {
             // if zip was succesfull created read it
             fs.createReadStream(dest)
-                // unzip all files
-                .pipe(unzip.Parse())
-                // and send it to this pipe
-                .on('entry', function () {
-                  counter--;
-                })
-                .on('close', function () {
-                  assert.equal(counter, 0);
-                  mcapDeploy.deleteZip(dest);
-                  assert.equal(fs.existsSync(dest), false, 'zip not deleted');
-                  cb();
-                });
+            // unzip all files
+            .pipe(unzip.Parse())
+            // and send it to this pipe
+            .on('entry', function () {
+              counter--;
+            })
+            .on('close', function () {
+              assert.equal(counter, 0);
+              mcapDeploy.deleteZip(dest);
+              assert.equal(fs.existsSync(dest), false, 'zip not deleted');
+              cb();
+            });
         });
     });
 });
