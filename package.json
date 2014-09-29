@@ -1,7 +1,7 @@
 {
   "name": "mcap-deploy",
   "description": "node.js implementation to deploy an app against the studio API.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "homepage": "https://github.com/mwaylabs/mcap-deploy",
   "bugs": "https://github.com/mwaylabs/mcap-deploy/issues",
   "license": "MIT",

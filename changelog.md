@@ -1,3 +1,7 @@
+
+## 0.2.0 - 2014-09-29
+- Use git ignore style for '.mcapignore'
+
 ## 0.1.0 - 2014-09-24
 - '.mcapignore' will be evaluated
 - Improve error reporting
