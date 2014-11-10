@@ -16,14 +16,14 @@
   "keywords": [],
   "dependencies": {
     "archiver": "^0.11.0",
-    "debug": "1.0.4",
+    "debug": "^1.0.4",
     "findup": "^0.1.5",
     "fstream-ignore": "^1.0.1",
-    "lodash": "2.4.1",
+    "lodash": "^2.4.1",
+    "mcap-application-validation": "^0.1.0",
     "node-formdata": "^0.1.5",
     "q": "2.0.2",
-    "request": "^2.40.0",
-    "verror": "^1.4.0"
+    "request": "^2.40.0"
   },
   "devDependencies": {
     "coveralls": "^2.10.0",
