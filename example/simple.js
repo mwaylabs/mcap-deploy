@@ -10,7 +10,6 @@
 
 var mcapDeploy = require('../');
 var path = require('path');
-var Request = require('request');
 
 //var request = Request.defaults({jar: true});
 //request.post = function(data){
@@ -18,19 +17,16 @@ var Request = require('request');
 //};
 
 var options = {
-    baseurl: '<URL>',
-    username: '<USERNAME>',
-    password: '<PASSWORD>',
-    fields: {
-        name: 'TestApp1',
-        uuid: '5fc00ddc-292a-4084-8679-fa8a7fadf1db'
-    },
-    rootPath: path.resolve(__dirname, '../example/apps/MyTestApp'),
+    baseurl: 'http://localhost:18080',
+    username: 'sbuck',
+    password: 'sbuck123',
+    rootPath: path.resolve(__dirname, '../test/fixtures/MyTestApp/client'),
     progress: function(percent, chunkSize, totalSize){
         console.log(percent, chunkSize, totalSize);
     }
 };
-mcapDeploy.deploy(options/*, request*/).then(function(){
+
+mcapDeploy.deploy(options).then(function(){
     console.log('succ uploaded');
     console.log(arguments);
 }, function(){
