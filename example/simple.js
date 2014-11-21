@@ -11,16 +11,11 @@
 var mcapDeploy = require('../');
 var path = require('path');
 
-//var request = Request.defaults({jar: true});
-//request.post = function(data){
-//    console.error(data);
-//};
-
 var options = {
-    baseurl: 'http://localhost:18080',
-    username: 'sbuck',
-    password: 'sbuck123',
-    rootPath: path.resolve(__dirname, '../test/fixtures/MyTestApp/client'),
+    baseurl: 'http://localhost',
+    username: 'admin',
+    password: 'password',
+    rootPath: path.resolve(__dirname, '../test/fixtures/MyTestApp/'),
     progress: function(percent, chunkSize, totalSize){
         console.log(percent, chunkSize, totalSize);
     }
@@ -29,7 +24,7 @@ var options = {
 mcapDeploy.deploy(options).then(function(){
     console.log('succ uploaded');
     console.log(arguments);
-}, function(){
+}, function(err){
     console.log('something bad happend');
-    console.log(arguments);
+    console.log(JSON.stringify(err, null, ' '));
 });

@@ -2,7 +2,7 @@
     "uuid": "0dbd6ba2-461b-4e88-b276-300e2758ad3d",
     "name": "MyTestApp",
     "description": "",
-    "baseAlias": "",
+    "baseAlias": "/MyTestApp",
     "push": {
         "providers": [
             {
