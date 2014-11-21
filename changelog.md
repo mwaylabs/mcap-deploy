@@ -1,4 +1,9 @@
 
+## 0.3.0 - 2014-11-21
+- Use [mcap-application-validation](https://github.com/mwaylabs/mcap-application-validation)
+- Get `name` and `uuid` from `mcap.json`
+- Refactor promises
+
 ## 0.2.0 - 2014-09-29
 - Use git ignore style for '.mcapignore'
 
