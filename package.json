@@ -23,7 +23,8 @@
     "mcap-application-validation": "^0.1.0",
     "node-formdata": "^0.1.5",
     "q": "2.0.2",
-    "request": "^2.40.0"
+    "request": "^2.40.0",
+    "verror": "^1.6.0"
   },
   "devDependencies": {
     "coveralls": "^2.10.0",
