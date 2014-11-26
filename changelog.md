@@ -1,4 +1,7 @@
 
+## 0.3.2 - 2014-11-21
+- Improve error handling
+
 ## 0.3.0 - 2014-11-21
 - Use [mcap-application-validation](https://github.com/mwaylabs/mcap-application-validation)
 - Get `name` and `uuid` from `mcap.json`
