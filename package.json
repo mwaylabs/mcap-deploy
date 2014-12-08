@@ -21,6 +21,7 @@
     "fstream-ignore": "^1.0.1",
     "lodash": "^2.4.1",
     "mcap-application-validation": "^0.1.0",
+    "mcap-log": "^0.1.1",
     "node-formdata": "^0.1.5",
     "q": "2.0.2",
     "request": "^2.40.0",
