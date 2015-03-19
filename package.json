@@ -1,7 +1,7 @@
 {
   "name": "mcap-deploy",
   "description": "node.js implementation to deploy an app against the studio API.",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "homepage": "https://github.com/mwaylabs/mcap-deploy",
   "bugs": "https://github.com/mwaylabs/mcap-deploy/issues",
   "license": "MIT",
@@ -22,7 +22,7 @@
     "lodash": "^2.4.1",
     "mcap-application-validation": "^0.1.0",
     "mcap-log": "^0.1.1",
-    "node-formdata": "^0.1.5",
+    "node-formdata": "^0.1.8",
     "q": "2.0.2",
     "request": "^2.40.0",
     "verror": "^1.6.0"
