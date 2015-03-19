@@ -1,4 +1,7 @@
 
+## 0.3.5 - 2015-03-19
+- streaming of deploy response
+
 ## 0.3.2 - 2014-11-21
 - Improve error handling
 
