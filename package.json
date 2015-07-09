@@ -23,7 +23,7 @@
     "mcap-application-validation": "^0.1.0",
     "mcap-log": "^0.1.1",
     "node-formdata": "^0.1.8",
-    "q": "2.0.2",
+    "q": "2.0.3",
     "request": "^2.40.0",
     "verror": "^1.6.0"
   },
