@@ -18,7 +18,7 @@
     "archiver": "^0.11.0",
     "debug": "^1.0.4",
     "findup": "^0.1.5",
-    "fstream-ignore": "git://github.com/mwaylabs/fstream-ignore.git#6d1f13afa0af781d41afe1f12f42845b2a51a915",
+    "fstream-ignore": "git+https://github.com/mwaylabs/fstream-ignore.git#6d1f13afa0af781d41afe1f12f42845b2a51a915",
     "lodash": "^2.4.1",
     "mcap-application-validation": "^0.1.0",
     "mcap-log": "^0.1.1",
